@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:  application:    name: unbox-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "routes"
+zuul:
+  ignored-services:  - '*'
+  prefix: /api/v1
+  routes:
+    unbox-auth-server:
+      path: /auth/**
+      serviceId: unbox-auth-server
+  sensitive-headers:
+  - Cookie, Authorization
+ribbon:
+  ReadTimeout: 600000
